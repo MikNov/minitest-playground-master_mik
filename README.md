@@ -25,14 +25,3 @@ It is time to run some tests against OMDb API - The Open Movie Database!
 5) Add a test that verifies none of the poster links on page 1 are broken
  
 
-## How to start
-Install dependencies
-```bash
-bundle
-```
-Fetched API Key: `ebc4518` (1000 request/day LIMIT!!)
-
-Run tests:
-```bash
-bundle exec ruby -Itest ./*/*_test.rb
-```
