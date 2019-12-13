@@ -17,7 +17,7 @@ class ApiTest < Minitest::Test
   def test_search_thomas
     request('GET', "?s=#{SEARCH_THOMAS}&apikey=#{API_KEY}", {}, 'http://www.omdbapi.com/')
     last_response.obj['Search'].map { |item|
-      assert_equal item['Title'].downcase.include?(SEARCH_THOMAS), true # Not all title has latin a. Skipped this test, because of fail
+      assert_equal item['Title'].downcase.include?(SEARCH_THOMAS), true
 
       ['Title', 'Year', 'imdbID', 'Type', 'Poster'].map { |prop|
         assert_equal item[prop].nil?, false
@@ -25,20 +25,20 @@ class ApiTest < Minitest::Test
       }
     }
   end
-      # Verify year matches correct format ??? - What is correct format?
+
   def test_i_parameter
-        request('GET', "?i=#{item['imdbID']}&apikey=#{API_KEY}", {}, 'http://www.omdbapi.com/')
+        request('GET', "?i=#{}&page=#{'1'}&apikey=#{API_KEY}", {}, 'http://www.omdbapi.com/')
+       # item = last_response.obj['Search'][0]
+       # request('GET', "?i=#{item['imdbID']}&apikey=#{API_KEY}", {}, 'http://www.omdbapi.com/')
         assert_equal last_response.obj['Title'].nil?, false
 
 
   end
 
   def test_links_arent_broken
-    request('GET', "?s=#{SEARCH_THOMAS}&apikey=#{API_KEY}", {}, 'http://www.omdbapi.com/')
-    assert_equal last_response.attrs[:status], 200
+    request('GET', "?i=#{}&page=#{'1'}&apikey=#{API_KEY}", {}, 'http://www.omdbapi.com/')
 
-    #    request(last_response.obj['Poster'], 200)
+    assert_equal last_response.RestClient.get(Poster) , 200
 
-        #assert_equal last_response.code, 200
   end
 end
